@@ -2,6 +2,7 @@ package com.thoughtworks.parking_lot.service;
 
 import com.thoughtworks.parking_lot.core.ParkingLot;
 import com.thoughtworks.parking_lot.repository.ParkingLotRepository;
+import javassist.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
@@ -21,22 +22,30 @@ public class ParkingLotService {
         return parkingLot;
     }
 
-    public String deleteParkingLotByName(String name) {
-        parkingLotRepository.deleteByName(name);
-        return "Parking Lot Was Deleted!";
+    public String deleteParkingLotByName(String name) throws NotFoundException {
+        if(parkingLotRepository.findByName(name).getName() != null) {
+            parkingLotRepository.deleteByName(name);
+            return "Parking Lot Was Deleted!";
+        }
+        throw new NotFoundException("No parking lot was deleted!");
+
     }
 
-    public Iterable<ParkingLot> displayParkingLots(Integer page, Integer pageSize) {
-
-        return parkingLotRepository.findAll(PageRequest.of(page, pageSize));
+    public Iterable<ParkingLot> displayParkingLots(Integer page, Integer pageSize) throws NotFoundException {
+        if(parkingLotRepository.findAll(PageRequest.of(page, pageSize)).getTotalElements() > 0) {
+            return parkingLotRepository.findAll(PageRequest.of(page, pageSize));
+        }
+        throw new NotFoundException("No parking lot was found!");
     }
 
-    public ParkingLot displaySpecificParkingLot(String name) {
-
-        return parkingLotRepository.findByName(name);
+    public ParkingLot displaySpecificParkingLot(String name) throws NotFoundException {
+        if(parkingLotRepository.findByName(name).getName() != null) {
+            return parkingLotRepository.findByName(name);
+        }
+        throw new NotFoundException("No parking lot was found!");
     }
 
-    public ParkingLot modifySpecificParkingLot(String name, ParkingLot parkingLot) {
+    public ParkingLot modifySpecificParkingLot(String name, ParkingLot parkingLot) throws NotFoundException {
         if(parkingLotRepository.findByName(name).getName() != null)
         {
             ParkingLot parkingLot1 = parkingLotRepository.findByName(name);
@@ -44,6 +53,6 @@ public class ParkingLotService {
             parkingLotRepository.save(parkingLot1);
             return parkingLot1;
         }
-        return null;
+        throw new NotFoundException("No parking lot was modified!");
     }
 }
