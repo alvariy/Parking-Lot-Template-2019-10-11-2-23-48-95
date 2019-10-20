@@ -59,4 +59,14 @@ public class ParkingLotApplicationTests {
 
     }
 
+    @Test
+    public void should_delete_parking_lot_and_return_is_okay() throws Exception {
+
+        when(parkingLotService.deleteParkingLotByName(anyString())).thenReturn("Parking Lot Was Deleted!");
+        //when
+        ResultActions result = mvc.perform(delete("/parking-lots/Maax"));
+
+        result.andExpect(status().isOk());
+    }
+
 }

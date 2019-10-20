@@ -17,4 +17,8 @@ public class ParkingLotService {
         return parkingLot;
     }
 
+    public String deleteParkingLotByName(String name) {
+        parkingLotRepository.deleteByName(name);
+        return "Parking Lot Was Deleted!";
+    }
 }
