@@ -30,4 +30,9 @@ public class ParkingLotService {
 
         return parkingLotRepository.findAll(PageRequest.of(page, pageSize));
     }
+
+    public ParkingLot displaySpecificParkingLot(String name) {
+
+        return parkingLotRepository.findByName(name);
+    }
 }

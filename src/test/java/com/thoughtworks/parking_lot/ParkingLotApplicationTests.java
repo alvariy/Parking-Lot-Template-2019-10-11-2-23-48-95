@@ -87,7 +87,20 @@ public class ParkingLotApplicationTests {
         result.andExpect(status().isOk())
                 .andDo(print())
                 .andExpect(jsonPath("$", hasSize(2)));
+    }
+    @Test
+    public void should_get_specific_parking_lot() throws Exception {
 
+        ParkingLot parkingLot = new ParkingLot("MAAX", 15, "Pasay City");
+
+        //given
+        when(parkingLotService.displaySpecificParkingLot(anyString())).thenReturn(parkingLot);
+        //when
+        ResultActions result = mvc.perform(get("/parking-lots/MAAX"));
+        //then
+        result.andExpect(status().isOk())
+                .andDo(print())
+                .andExpect(jsonPath("$.name", is("MAAX")));
     }
 
 }

@@ -16,4 +16,7 @@ public interface ParkingLotRepository extends JpaRepository<ParkingLot, Long> {
     @Modifying
     @Query("DELETE FROM ParkingLot p where p.name = :name")
     void deleteByName(@Param("name") String name);
+
+    @Query("Select p FROM ParkingLot p where p.name = :name")
+    ParkingLot findByName(@Param("name") String name);
 }

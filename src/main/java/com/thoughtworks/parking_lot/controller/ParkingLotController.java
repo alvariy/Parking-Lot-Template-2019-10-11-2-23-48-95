@@ -33,4 +33,11 @@ public class ParkingLotController {
     {
         return parkingLotService.displayParkingLots(page, pageSize);
     }
+
+    @GetMapping(value = "/{name}", produces = {"application/json"})
+    public ParkingLot displaySpecificParkingLot(@PathVariable String name)
+    {
+        return  parkingLotService.displaySpecificParkingLot(name);
+    }
+
 }
