@@ -15,6 +15,9 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.hasSize;
 
@@ -65,8 +68,26 @@ public class ParkingLotApplicationTests {
         when(parkingLotService.deleteParkingLotByName(anyString())).thenReturn("Parking Lot Was Deleted!");
         //when
         ResultActions result = mvc.perform(delete("/parking-lots/Maax"));
-
+        //then
         result.andExpect(status().isOk());
+    }
+
+    @Test
+    public void should_get_all_list_with_15_page_size() throws Exception {
+
+        List<ParkingLot> parkingLots = new ArrayList<>();
+        parkingLots.add(new ParkingLot());
+        parkingLots.add(new ParkingLot());
+
+        //given
+        when(parkingLotService.displayParkingLots(0,15)).thenReturn(parkingLots);
+        //when
+        ResultActions result = mvc.perform(get("/parking-lots"));
+        //then
+        result.andExpect(status().isOk())
+                .andDo(print())
+                .andExpect(jsonPath("$", hasSize(2)));
+
     }
 
 }

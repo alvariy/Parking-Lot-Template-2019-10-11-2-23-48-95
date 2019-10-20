@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.awt.*;
+import java.util.List;
 
 @RestController
 @RequestMapping("/parking-lots")
@@ -26,4 +27,10 @@ public class ParkingLotController {
         return parkingLotService.deleteParkingLotByName(name);
     }
 
+    @GetMapping(produces = {"application/json"})
+    public Iterable<ParkingLot> displayParkingLots(@RequestParam(defaultValue = "0") Integer page,
+                                               @RequestParam(defaultValue = "15") Integer pageSize)
+    {
+        return parkingLotService.displayParkingLots(page, pageSize);
+    }
 }
