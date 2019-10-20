@@ -16,4 +16,5 @@ public class ParkingLotService {
         parkingLotRepository.save(parkingLot);
         return parkingLot;
     }
+
 }

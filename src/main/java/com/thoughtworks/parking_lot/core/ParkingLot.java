@@ -1,31 +1,19 @@
 package com.thoughtworks.parking_lot.core;
 
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 @Entity
 public class ParkingLot {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
 
+    @Id
     private String name;
 
     private int capacity;
 
     private String location;
 
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
 
     public String getName() {
         return name;
@@ -48,6 +36,12 @@ public class ParkingLot {
     }
 
     public void setLocation(String location) {
+        this.location = location;
+    }
+
+    public ParkingLot(String name, int capacity, String location) {
+        this.name = name;
+        this.capacity = capacity;
         this.location = location;
     }
 
