@@ -35,4 +35,15 @@ public class ParkingLotService {
 
         return parkingLotRepository.findByName(name);
     }
+
+    public ParkingLot modifySpecificParkingLot(String name, ParkingLot parkingLot) {
+        if(parkingLotRepository.findByName(name).getName() != null)
+        {
+            ParkingLot parkingLot1 = parkingLotRepository.findByName(name);
+            parkingLot1.setCapacity(parkingLot.getCapacity());
+            parkingLotRepository.save(parkingLot1);
+            return parkingLot1;
+        }
+        return null;
+    }
 }

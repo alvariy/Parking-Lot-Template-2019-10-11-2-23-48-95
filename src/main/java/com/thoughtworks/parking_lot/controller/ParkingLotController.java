@@ -40,4 +40,10 @@ public class ParkingLotController {
         return  parkingLotService.displaySpecificParkingLot(name);
     }
 
+    @PutMapping(value = "/{name}", produces = {"application/json"})
+    public ParkingLot modifySpecificParkingLot(@PathVariable String name, @RequestBody ParkingLot parkingLot)
+    {
+        return parkingLotService.modifySpecificParkingLot(name, parkingLot);
+    }
+
 }

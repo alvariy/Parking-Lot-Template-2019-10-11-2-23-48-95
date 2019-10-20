@@ -103,4 +103,21 @@ public class ParkingLotApplicationTests {
                 .andExpect(jsonPath("$.name", is("MAAX")));
     }
 
+    @Test
+    void should_modify_specific_parking_lot_capacity() throws Exception {
+
+        ParkingLot parkingLot = new ParkingLot("MAAX", 15, "Pasay City");
+        ParkingLot parkingLot2 = new ParkingLot("MAAX", 10, "Pasay City");
+
+        //given
+        when(parkingLotService.modifySpecificParkingLot(anyString(), any())).thenReturn(parkingLot2);
+
+        ResultActions result = mvc.perform(put("/parking-lots/MAAX")
+        .content(objectMapper.writeValueAsString(parkingLot2))
+        .contentType(MediaType.APPLICATION_JSON));
+
+        result.andExpect(status().isOk())
+                .andDo(print())
+                .andExpect(jsonPath("$.capacity", is(10)));
+    }
 }

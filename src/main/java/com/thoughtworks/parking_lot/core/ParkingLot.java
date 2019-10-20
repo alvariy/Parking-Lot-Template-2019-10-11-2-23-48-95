@@ -48,4 +48,8 @@ public class ParkingLot {
     public ParkingLot() {
     }
 
+    public ParkingLot(int capacity) {
+        this.capacity = capacity;
+    }
+
 }
