@@ -38,6 +38,5 @@ public class OrderService {
         order1.setOrderStatus("Close");
 
         return order1;
-
     }
 }
